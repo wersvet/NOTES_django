@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form action="{% url 'notes.new'%}" method="post">
+                {% csrf_token %}
+                {{form}}
+                <button type="submit" class=btn btn-sm btn-success>Submit</button>
+            </form>
+            {% if form.errors%}
+                <div class="alert alert-danger">
+                    {{form.errors}}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
