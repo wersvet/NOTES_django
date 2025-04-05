@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="confirm-message">
+            <form action="" method="post"></form>
+            {% csrf_token %}
+            <p>Уверен что хочешь удалить? <q>{{note.title}}</q></p>
+            <input type="submit" class="btn btn-danger" value="Подтвердить">
+        </div>
+    </div>
+</div>
+
+{% endblock  %}
