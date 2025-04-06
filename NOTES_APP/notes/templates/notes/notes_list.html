@@ -2,10 +2,9 @@
 {% load static %}
 
 {% block content %}
-
 <div class="row">
     <div class="col">
-        <div class="note_list_heading text-center mb-5"
+        <div class="note_list_heading text-center mb-5">
             <h1 class="fs-4">Ваши заметки</h1>
         </div>
     </div>
@@ -14,25 +13,18 @@
     {% for note in notes %}
         <div class="col-md-4">
             <div class="card mb-3">
-                <div class="card-header">{{note.title}}</div>
+                <div class="card-header">
+                    {{ note.title }}
+                    {% if note.user != user %} (Поделился: {{ note.user.username }}) {% endif %}
+                </div>
                 <div class="card-body">
-                    <p>{{note.text | truncatechars:45}}</p>
+                    <p>{{ note.text | truncatechars:45 }}</p>
                 </div>
                 <div class="card-footer">
-                    <a href="{% url 'notes.detail' pk=note.id%}" class="btn btn-info btn-sm">Посмотреть заметку</a>
+                    <a href="{% url 'notes.detail' pk=note.id %}" class="btn btn-info btn-sm">Посмотреть заметку</a>
                 </div>
             </div>
         </div>
     {% endfor %}
-    </div>
-
-</div> 
-
-<!-- 
-<ul>
-    {% for note in notes %}
-        <li class="note-li">{{ note.title }}</li>
-    {% endfor %}
-</ul> -->
-
+</div>
 {% endblock %}
