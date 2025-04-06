@@ -1,25 +1,12 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from .models import Notes
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .forms import NotesForm
-
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-
 from django.shortcuts import render, redirect
 from .models import Notes, SharedNote
-from django.http import HttpResponse
 from django.contrib.auth.models import User
-
-from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.views import View  # Добавляем этот импорт
-from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Notes, SharedNote
-from .forms import NotesForm
+from django.views import View
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth.models import User
+
 
 class NotesListView(LoginRequiredMixin, ListView):
     model = Notes
@@ -47,7 +34,7 @@ class NotesDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['is_owner'] = self.object.user == self.request.user  # Проверяем, владелец ли
+        context['is_owner'] = self.object.user == self.request.user
         return context
     
 

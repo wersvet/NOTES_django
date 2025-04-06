@@ -5,25 +5,27 @@
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">Подробности заметки</div>
+            <div class="card-header">Заметка</div>
             <div class="card-body">
-                <h1 class="fs-5">{{ note.title }}</h1>
+                <h1 class="fs-4 mb-3">{{ note.title }}</h1>
                 <p>{{ note.text }}</p>
                 {% if is_owner %}
-                    <form action="{% url 'notes.share' pk=note.id %}" method="post" class="mt-3">
+                    <form action="{% url 'notes.share' pk=note.id %}" method="post" class="mt-4">
                         {% csrf_token %}
                         <div class="input-group">
                             <input type="text" name="username" class="form-control" placeholder="Имя пользователя">
-                            <button type="submit" class="btn btn-sm btn-primary">Поделиться</button>
+                            <button type="submit" class="btn btn-primary">Поделиться</button>
                         </div>
                     </form>
                 {% endif %}
             </div>
-            <div class="card-footer">
-                <a href="{% url 'notes.list' %}" class="btn btn-sm btn-primary">Назад</a>
+            <div class="card-footer d-flex justify-content-between">
+                <a href="{% url 'notes.list' %}" class="btn btn-primary">Назад</a>
                 {% if is_owner %}
-                    <a href="{% url 'notes.update' pk=note.id %}" class="btn btn-sm btn-warning">Изменить</a>
-                    <a href="{% url 'notes.update' pk=note.id %}" class="btn btn-sm btn-danger">Удалить</a>
+                    <div>
+                        <a href="{% url 'notes.update' pk=note.id %}" class="btn btn-warning me-2">Изменить</a>
+                        <a href="{% url 'notes.delete' pk=note.id %}" class="btn btn-danger">Удалить</a>
+                    </div>
                 {% endif %}
             </div>
         </div>

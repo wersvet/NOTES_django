@@ -1,70 +1,33 @@
 import random
 import string
-
-
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.views import View
-from django.views.generic import TemplateView, CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-from django.contrib.auth.views import LoginView, LogoutView
-
-from django.contrib.auth.forms import UserCreationForm
-
-from django.shortcuts import redirect
-from .forms import CustomUserCreationForm
-
-from django.core.mail import send_mail
-from django.urls import reverse
-from .models import EmailVerification
-
-from django.shortcuts import redirect
-from django.http import HttpResponse
-
-from django.core.mail import send_mail
-from django.urls import reverse
-from .models import EmailVerification
-from django.conf import settings
-
-import random
-import string
-from django.contrib.auth import login  # Добавляем импорт для login
-from .models import TwoFactorCode
-
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.views import View
-from django.contrib.auth import login  # Уже должен быть импортирован
-from django.contrib.auth.models import User  # Добавляем импорт User
-from .models import TwoFactorCode
-
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.views import View
-from django.views.generic import TemplateView, CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
-from django.contrib.auth.models import User  # Импорт User
-from django.core.mail import send_mail
-from django.urls import reverse
-from django.conf import settings
-from .forms import CustomUserCreationForm
-from .models import EmailVerification, TwoFactorCode
-import random
-import string
 import uuid
 
-from django.contrib.auth.views import LogoutView
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.views import View
+from django.views.generic import TemplateView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
+from .forms import CustomUserCreationForm
+from django.core.mail import send_mail
+from django.urls import reverse
+from .models import EmailVerification, TwoFactorCode
+from django.conf import settings
+from django.contrib.auth import login 
+from django.contrib.auth.models import User
+
+
 
 class LoginInterfaceView(LoginView):
     template_name = 'home/login.html'
 
     def form_valid(self, form):
         user = form.get_user()
+        if user.is_superuser:
+            login(self.request, user)
+            return redirect('notes.list')
         code = ''.join(random.choices(string.digits, k=6))
         TwoFactorCode.objects.create(user=user, code=code)
         send_2fa_email(user, code)
@@ -89,7 +52,7 @@ class HomeView(TemplateView):
 
 
 class SighupView(CreateView):
-    form_class = CustomUserCreationForm  # Используем кастомную форму
+    form_class = CustomUserCreationForm 
     template_name = 'home/register.html'
     success_url = '/smart/notes'
 
@@ -140,7 +103,7 @@ class Verify2FAView(View):
         if not user_id:
             return redirect('login')
         try:
-            user = User.objects.get(id=user_id)  # Используем User
+            user = User.objects.get(id=user_id) 
             two_factor = TwoFactorCode.objects.filter(user=user, code=code).latest('created_at')
             two_factor.delete()
             login(request, user)  # Авторизуем пользователя

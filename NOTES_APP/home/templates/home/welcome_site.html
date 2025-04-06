@@ -1,12 +1,39 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
-    <div class="col">
-        <div class="home-holder text-center">
-            <h1 class="fs-3">Hello</h1>
-            <p>Welcome to the APP</p>
-            <a href="{% url 'notes.list' %}" class="btn btn-success btn-sm">Go to Smart Notes</a>
-        </div>
+<div class="welcome-container">
+    <div class="welcome-content text-center">
+        <h1 class="display-3 fw-bold mb-4">Добро пожаловать в Блокнот!</h1>
+        <p class="lead mb-5">Можно создавать, изменять, удалять, и делится заметками.</p>
+        <a href="{% url 'notes.list' %}" class="btn btn-success btn-lg">Перейти к заметкам</a>
     </div>
+</div>
+
+<style>
+    .welcome-container {
+        background-color: #fff5e6;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+    .welcome-content {
+        max-width: 800px;
+    }
+    .display-3 {
+        font-size: 4.5rem;
+        color: #333;
+    }
+    .lead {
+        font-size: 1.5rem;
+        color: #555;
+    }
+    .btn-lg {
+        padding: 15px 30px;
+        font-size: 1.25rem;
+        border-radius: 10px;
+    }
+</style>
 {% endblock %}
