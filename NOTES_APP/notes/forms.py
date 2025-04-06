@@ -10,5 +10,5 @@ class NotesForm(forms.ModelForm):
             'text': forms.Textarea(attrs={'class': 'form-control my-3'}),
         }
         labels = {
-            'text': 'Write your notes here',
+            'text': 'Напишите текст',
         }
