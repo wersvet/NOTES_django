@@ -130,3 +130,12 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/smart/notes'
+LOGOUT_REDIRECT_URL = '/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'alimzhanbaizhanov22@gmail.com'  # Твой email
+EMAIL_HOST_PASSWORD = 'fxqk bxhu xllk sulj'  # Пароль приложения (не обычный пароль, если 2FA включена у Gmail)
+DEFAULT_FROM_EMAIL = 'alimzhanbaizhanov22@gmail.com'

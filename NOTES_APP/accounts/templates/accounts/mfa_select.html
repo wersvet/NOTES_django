@@ -1,0 +1,7 @@
+<h2>Выберите метод MFA</h2>
+<form method="POST">
+  {% csrf_token %}
+  <label><input type="radio" name="mfa_method" value="email"> Получить код по Email</label><br>
+  <label><input type="radio" name="mfa_method" value="totp"> Использовать Google Authenticator</label><br>
+  <button type="submit">Продолжить</button>
+</form>
